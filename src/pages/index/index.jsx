@@ -1,8 +1,21 @@
 import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
 import './index.less'
+import { mapStyle } from '../../utils/mapStyle'
 
-export default class Index extends Component {
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+import { setQueryInfo } from '../../redux/action/queryInfo'
+
+export class Index extends Component {
+  constructor(props) {
+    super(props)
+    this.infoWindow = null
+    this.map = null
+    this.maps = null
+    this.dataLayer = null
+  }
   static defaultProps = {
     center: {
       lat: 40.7143528,
@@ -11,24 +24,44 @@ export default class Index extends Component {
     zoom: 10
   }
 
+  handleMapApiLoad = (map, maps) => {
+    this.map = map
+    this.maps = maps
+    this.infoWindow = new maps.InfoWindow({})
+    this.initDataLayer()
+    this.setDataStyle()
+
+    this.dataLayer.addListener('click', this.onRegionClick)
+  }
+
   initDataLayer() {
     this.dataLayer = new this.maps.Data({ map: this.map })
     this.dataLayer.loadGeoJson('./nyc_area.json')
   }
 
-  handleMapApiLoad = (map,maps) => {
-    this.map = map
-    this.maps = maps
-    this.infoWindow = new maps.InfoWindow({})
-    this.initDataLayer()
-    map.data.loadGeoJson('./nyc-zip-polygon.json')
-    this.setDataStyle()
-    this.dataLayer.addListener('click', this.onRegionClick)
+  setDataStyle = () => {
+    this.dataLayer.setStyle(feature => {
+      const low = [5, 69, 54]
+      const high = [151, 83, 34]
+      const color = []
+      for (let i = 0; i < 3; i++) {
+        color[i] = (high[i] - low[i]) * Math.random() + low[i]
+      }
+
+      let outlineWeight = 0.5,
+        zIndex = 1
+
+      return {
+        strokeWeight: outlineWeight,
+        strokeColor: '#fff',
+        zIndex: zIndex,
+        fillColor: 'hsl(' + color[0] + ',' + color[1] + '%,' + color[2] + '%)',
+        fillOpacity: 0.75
+      }
+    })
   }
 
-
   onRegionClick = e => {
-    console.log('???!!!!')
     const feature = e.feature
 
     const getZipUrl = (latLng, key) => {
@@ -74,49 +107,6 @@ export default class Index extends Component {
       .join('')
   }
 
-  setDataStyle = () => {
-    this.dataLayer.setStyle(feature => {
-      const low = [5, 69, 54]
-      const high = [151, 83, 34]
-      const color = []
-      for (let i = 0; i < 3; i++) {
-        color[i] = (high[i] - low[i]) * Math.random() + low[i]
-      }
-
-      let outlineWeight = 0.5,
-        zIndex = 1
-
-      return {
-        strokeWeight: outlineWeight,
-        strokeColor: '#fff',
-        zIndex: zIndex,
-        fillColor: 'hsl(' + color[0] + ',' + color[1] + '%,' + color[2] + '%)',
-        fillOpacity: 0.75
-      }
-    })
-  }
-
-  createMapOptions = map => {
-    const mapStyle = [
-      {
-        stylers: [{ visibility: 'off' }]
-      },
-      {
-        featureType: 'landscape',
-        elementType: 'geometry',
-        stylers: [{ visibility: 'on' }, { color: '#fcfcfc' }]
-      },
-      {
-        featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ visibility: 'on' }, { color: '#bfd4ff' }]
-      }
-    ]
-    return {
-      styles: mapStyle
-    }
-  }
-
   render() {
     return (
       <div className="mapContainer">
@@ -126,11 +116,24 @@ export default class Index extends Component {
           }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
+          options={{ styles: mapStyle }}
           yesIWantToUseGoogleMapApiInternals
-          options={this.createMapOptions}
           onGoogleApiLoaded={({ map, maps }) => this.handleMapApiLoad(map, maps)}
         />
       </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {}
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setQueryInfo }, dispatch)
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Index)
