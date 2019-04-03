@@ -25,13 +25,15 @@ export class Index extends Component {
     zoom: 10
   }
 
+  
   handleMapApiLoad = (map, maps) => {
     this.map = map
     this.maps = maps
     this.infoWindow = new maps.InfoWindow({})
     this.initDataLayer()
     this.setDataStyle()
-
+    this.dataLayer.addListener('mouseover', this.onMouseInRegion)
+    this.dataLayer.addListener('mouseout', this.onMouseOutRegion)
     this.dataLayer.addListener('click', this.onRegionClick)
   }
 
@@ -83,6 +85,16 @@ export class Index extends Component {
         .catch(e => resolve('none info'))
     })
   }
+
+  onMouseInRegion = e => {
+    e.feature.setProperty('state', 'hover')
+  }
+
+  onMouseOutRegion = e => {
+    e.feature.setProperty('state', 'normal')
+  }
+
+
 
   onRegionClick = e => {
     const feature = e.feature
