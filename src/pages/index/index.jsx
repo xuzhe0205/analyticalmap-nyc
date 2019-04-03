@@ -15,6 +15,7 @@ export class Index extends Component {
     this.map = null
     this.maps = null
     this.dataLayer = null
+    this.apiKey = 'AIzaSyCj84rcb1xl0PJWCDemv2-0Z-COMB8g22M'
   }
   static defaultProps = {
     center: {
@@ -61,40 +62,61 @@ export class Index extends Component {
     })
   }
 
+  fetchZipCode(latLng) {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=${
+      this.apiKey
+    }`
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.results && data.results.length > 0) {
+            // get zipCode
+            const address = data.results[1].address_components
+            const zipObj = address.filter(a => a.types[0] === 'postal_code')
+            const zipCode = zipObj.length > 0 ? zipObj[0].long_name : 'none info'
+            resolve(zipCode)
+          } else {
+            resolve('none info')
+          }
+        })
+        .catch(e => resolve('none info'))
+    })
+  }
+
   onRegionClick = e => {
     const feature = e.feature
+    // get cityName
+    const name = feature.getProperty('NTAName')
 
-    const getZipUrl = (latLng, key) => {
-      return `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latLng}&key=${key}`
+    const showInfoWindow = zipCode => {
+      // set infoWindow content
+      const html = this.createPropertyHtml([
+        { key: 'NAME: ', value: name },
+        { key: 'ZIP CODE: ', value: zipCode }
+      ])
+      this.infoWindow.setContent(html)
+      // show infoWindow
+      this.infoWindow.setPosition(e.latLng)
+      const pixelOffset = new this.maps.Size(0, -4)
+      this.infoWindow.setOptions({ pixelOffset })
+      this.infoWindow.open(this.map)
+
+      const geoid = feature.getProperty('geoid')
+      // set the queryInfo
+      this.props.setQueryInfo(zipCode, geoid, { lat: e.latLng.lat(), lng: e.latLng.lng() }, name)
     }
-    // get zipCode
-    fetch(getZipUrl(e.latLng.toUrlValue(), 'AIzaSyCj84rcb1xl0PJWCDemv2-0Z-COMB8g22M'))
-      .then(response => response.json())
-      .then(data => {
-        if (data.results && data.results.length > 0) {
-          // get zipCode
-          const address = data.results[1].address_components
-          const zipObj = address.filter(a => a.types[0] === 'postal_code')
-          const zipCode = zipObj.length > 0 ? zipObj[0].long_name : 'none info'
-          // get cityName
-          const name = feature.getProperty('NTAName')
-          // set infoWindow content
-          const html = this.createPropertyHtml([
-            { key: 'NAME: ', value: name },
-            { key: 'ZIP CODE: ', value: zipCode }
-          ])
-          this.infoWindow.setContent(html)
-          // show infoWindow
-          this.infoWindow.setPosition(e.latLng)
-          const pixelOffset = new this.maps.Size(0, -4)
-          this.infoWindow.setOptions({ pixelOffset })
-          this.infoWindow.open(this.map)
 
-          const geoid = feature.getProperty('geoid')
-          // set the queryInfo
-          this.props.setQueryInfo(zipCode, geoid, e.latLng)
-        }
+    const lastZip = feature.getProperty('zipCode')
+    if (lastZip && lastZip !== 'none info') {
+      showInfoWindow(lastZip)
+    } else {
+      // get zipCode
+      this.fetchZipCode(e.latLng.toUrlValue()).then(zipCode => {
+        showInfoWindow(zipCode)
+        feature.setProperty('zipCode', zipCode)
       })
+    }
   }
 
   createPropertyHtml = arr => {
@@ -112,7 +134,7 @@ export class Index extends Component {
       <div className="mapContainer">
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: 'AIzaSyCj84rcb1xl0PJWCDemv2-0Z-COMB8g22M'
+            key: this.apiKey
           }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}

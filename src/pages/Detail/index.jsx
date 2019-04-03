@@ -1,57 +1,52 @@
 import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
 import WeatherInfo from '../../components/WeatherInfo'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { getCityInfo } from '../../redux/action/cityInfo'
+import locationImg from './images/location.png'
 import './index.less'
 
-export default class Detail extends Component {
+class Detail extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      wetherInfo: { desc: 'aaa' }
-    }
-  }
-  componentDidMount() {
-    this.getWeatherData()
-  }
-
-  getWeatherData() {
-    const zip = 11372
-    const key = '4f0d6dac40736d29dffa28c14393094f '
-    const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=metric&appid=${key}`
-    fetch(url)
-      .then(resp => resp.json())
-      .then(resp => {
-        const data = {
-          desc: resp.weather[0].description,
-          icon:
-            'https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/' +
-            resp.weather[0].icon,
-          feelsLick: resp.main.temp,
-          wind: resp.wind.speed,
-          humidity: resp.main.humidity,
-          pressure: resp.main.pressure
-        }
-        this.setState({ wetherInfo: data })
-      })
-      .catch(e => {
-        console.log(e)
-      })
   }
 
   render() {
+    const { zip, geoid, pos, name } = this.props.queryInfo
+    const { lat, lng } = pos
+
+    const Mark = ({ imgUrl }) => <img src={imgUrl} width="20px" height="20px" />
     return (
       <div className="detail">
-        <WeatherInfo />
+        <WeatherInfo zip={zip} name={name} />
         <div className="smallMap">
           <GoogleMapReact
             bootstrapURLKeys={{
               key: 'AIzaSyCj84rcb1xl0PJWCDemv2-0Z-COMB8g22M'
             }}
-            defaultCenter={{ lat: 40.7143528, lng: -74.0059731 }}
-            defaultZoom={10}
-          />
+            defaultCenter={{ lat, lng }}
+            defaultZoom={12}
+          >
+            <Mark lat={lat} lng={lng} imgUrl={locationImg} />
+          </GoogleMapReact>
         </div>
       </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    queryInfo: state.queryInfo
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ getCityInfo }, dispatch)
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Detail)

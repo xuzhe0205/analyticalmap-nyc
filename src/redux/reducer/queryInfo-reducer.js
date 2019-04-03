@@ -1,7 +1,8 @@
 const defaultQuery = {
-  zip: null,
-  geoid: null,
-  pos: null
+  zip: '11430',
+  geoid: '999US3651000498',
+  pos: { lat: 40.65238957093737, lng: -73.79311299257813 },
+  name: 'Bellerose'
 }
 
 export default (state = defaultQuery, action) => {

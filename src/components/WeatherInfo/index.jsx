@@ -7,15 +7,42 @@ export default class WeatherInfo extends Component {
 
     this.state = {
       time: '',
-      info: {
-        feelsLick: '15°C',
-        wind: '1.0 m/s',
-        humidity: '50%',
-        pressure: '1029 hPa'
-      }
+      detail: {
+        feelsLick: '-',
+        wind: '-',
+        humidity: '-',
+        pressure: '-'
+      },
+      desc: '',
+      icon: ''
     }
   }
-  render() {
+
+  getWeatherData() {
+    const zip = this.props.zip
+    const key = '4f0d6dac40736d29dffa28c14393094f'
+    const url = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&units=metric&appid=${key}`
+    fetch(url)
+      .then(resp => resp.json())
+      .then(resp => {
+        const data = {
+          feelsLick: resp.main.temp + '°C',
+          wind: resp.wind.speed + ' m/s',
+          humidity: resp.main.humidity + '%',
+          pressure: resp.main.pressure + ' hPa'
+        }
+        const desc = resp.weather[0].description
+        const icon = `https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/${
+          resp.weather[0].icon
+        }.png`
+        this.setState({ detail: data, desc, icon })
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+
+  componentWillMount() {
     setInterval(() => {
       const now = new Date()
       const date = now.toLocaleDateString()
@@ -23,25 +50,32 @@ export default class WeatherInfo extends Component {
       this.setState({ time: `${date}  ${time}` })
     }, 1000)
 
+    this.getWeatherData()
+  }
+
+  render() {
+    const { time, desc, icon, detail } = this.state
     return (
       <div className="weather-container">
         <div className="title">
-          <div className="mainTitle">New York City</div>
-          <div className="subTitle">clear sky</div>
+          <div className="mainTitle">{this.props.name}</div>
+          <div className="subTitle">{desc}</div>
+          <div className="temperature">{detail.feelsLick}</div>
         </div>
-        <div>
-          {Object.keys(this.state.info).map(key => {
+        <div className="detail-weather">
+          <div className="detail-title">Detail</div>
+          {Object.keys(detail).map((key, index) => {
             return (
-              <div>
+              <div key={index}>
                 <span>{key}</span>
-                <strong>{this.state.info[key]}</strong>
+                <strong>{detail[key]}</strong>
               </div>
             )
           })}
         </div>
         <div className="icon">
-          <img src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/01d.png" />
-          <span>{this.state.time}</span>
+          <img src={icon} />
+          <span>{time}</span>
         </div>
       </div>
     )
