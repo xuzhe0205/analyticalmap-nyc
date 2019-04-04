@@ -4,20 +4,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm start` or `yarn start`
 
-Runs the app in the development mode.<br>
+<b>Runs the app</b> in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm test`or `yarn test`
 
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `npm run build` or `yarn build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -27,7 +27,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### `npm run eject` or `yarn eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -43,6 +43,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 * Click the image below and navigate to youtube to watch the demo of this web app =>
 
 [![Watch the video demo =>](http://drive.google.com/uc?export=view&id=1yPOeYjpbUsFxure8RrPmCMUYnNC5TH-c)](https://youtu.be/7gqgz3BeSic)
+
+## Comments and future improvement
+
+Due to time constraint, even though the funcitonalities of this web app are included in this repository as it is, there are many aspects of information that are going to be touched on and developed in the future.
+
+* Targeting and serving various industries: advertisement, retail, and real estate, this web app will include rich information about local housing, regional economy, net income, safety issues, events et cetera. These data can help the public and associated industries to make informed decisions and broad knowledge about the NYC.
+
 
 ## Learn More
 
