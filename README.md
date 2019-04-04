@@ -39,6 +39,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 
 ## Demo
+
+* Click the image below and navigate to youtube to watch the demo of this web app =>
+
 [![Watch the video demo =>](http://drive.google.com/uc?export=view&id=1yPOeYjpbUsFxure8RrPmCMUYnNC5TH-c)](https://youtu.be/7gqgz3BeSic)
 
 ## Learn More
