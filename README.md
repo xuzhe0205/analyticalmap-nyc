@@ -80,3 +80,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 2. https://github.com/fullstackreact/google-maps-react
 
 
+## Note
+
+This project is still in progress :)
+
