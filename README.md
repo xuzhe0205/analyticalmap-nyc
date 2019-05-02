@@ -1,6 +1,6 @@
 ## Introduction to NYC Analytical Map
 
-This is a web application for a choropleth map for New York City that serves and provides different industry such as real estate, advertisement and retail with a variety of meaningful and analytical information: reagional weather, demographics, economy, housing, events, crime rates etc. At this point, pages navigation and regional weather are developed. And further improvement will be made.
+This is a web application for a choropleth map for New York City that serves and provides different industry such as real estate, advertisement and retail with a variety of meaningful and analytical information: reagional weather, demographics, economy, housing, events, crime rates etc. And further improvement will be made.
 
 ## Use Cases
 
@@ -18,9 +18,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+### Prerequisites/dependencies installation
 
-### `npm start` or `yarn start`
+`yarn add react-app-rewired --save-dev` or `npm install react-app-rewired --save-dev`
+
+`yarn add customize-cra --dev` or `npm install customize-cra --dev`
+
+### In the project directory, you can run the following code to start the web app:
+
+`npm start` or `yarn start`
 
 <b>Runs the app</b> in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -28,12 +34,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
-### `npm test`or `yarn test`
+`npm test`or `yarn test`
 
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build` or `yarn build`
+`npm run build` or `yarn build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -43,7 +49,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject` or `yarn eject`
+`npm run eject` or `yarn eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -56,9 +62,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Demo
 
-* <b>Click the image below and navigate to youtube to watch the demo of this web app =></b>
+* <b>Click the image below and navigate to youtube to watch the demo of this web app <i class="em em-point_down"></i></b>
 
-[![Watch the video demo =>](http://drive.google.com/uc?export=view&id=1yPOeYjpbUsFxure8RrPmCMUYnNC5TH-c)](https://youtu.be/7gqgz3BeSic)
+[![Watch the video demo =>](http://drive.google.com/uc?export=view&id=14hoQC0L4Kx8RupxqS4SRHpr6PlFHmA-O)](https://youtu.be/3RWnhyQ2gcw)
+
+<img src="https://drive.google.com/uc?export=view&id=17pjPMLwaUbWX4702Z2615waaVISXkHPE"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
 
 ## Comments and future improvement
 
