@@ -85,9 +85,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Acknowledgement
 
-1. civicdashboards.com
+1. civicdashboards.com (JSON data)
 
-2. https://github.com/fullstackreact/google-maps-react
+2. https://github.com/fullstackreact/google-maps-react (geo json data)
 
 
 ## Note
