@@ -74,7 +74,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 Due to time constraint, even though the funcitonalities of this web app are included in this repository as it is, there are many aspects of information that are going to be touched on and developed in the future.
 
-* Targeting and serving various industries: advertisement, retail, and real estate, this web app will include rich information about demographics, local housing, regional economy, net income, safety issues, events et cetera. These data can help the public and associated industries to make informed decisions and broad knowledge about the NYC.
+* Targeting and serving various industries: advertisement, retail, and real estate, this web app will include rich information about demographics, local housing, regional economy, net income, safety issues, events et cetera using `NYPD` and `Evenbrite` API. These data can help the public and associated industries to make informed decisions and broad knowledge about the NYC.
 
 
 ## Learn More
