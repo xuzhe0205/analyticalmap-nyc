@@ -62,7 +62,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Demo
 
-* <b>Click the image below and navigate to youtube to watch the demo of this web app <i class="em em-point_down">&#9759;</i></b>
+* <b>Click the image below and navigate to youtube to watch the demo of this web app <i class="em em-point_down" style = "font-size: 12px">&#9759;</i></b>
 
 [![Watch the video demo =>](http://drive.google.com/uc?export=view&id=14hoQC0L4Kx8RupxqS4SRHpr6PlFHmA-O)](https://youtu.be/3RWnhyQ2gcw)
 
