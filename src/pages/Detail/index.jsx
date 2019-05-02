@@ -33,23 +33,24 @@ class Detail extends Component {
     const Mark = ({ imgUrl }) => <img src={imgUrl} width="20px" height="20px" />
     const dataDisplay = isWeatherInfoReady ? 'block' : 'none'
     return (
-      <div className="detail">
-        <WeatherInfo zip={zip} name={name} />
-        <div className="smallMap">
-          <GoogleMapReact
-            bootstrapURLKeys={{
-              key: 'AIzaSyCj84rcb1xl0PJWCDemv2-0Z-COMB8g22M'
-            }}
-            defaultCenter={{ lat, lng }}
-            defaultZoom={12}
-          >
-            <Mark lat={lat} lng={lng} imgUrl={locationImg} />
-          </GoogleMapReact>
-          
-        </div>
-        <div style={{ display: 'block' }}>
-          <p className = "test">{geoid}</p>
-          <DetailInfo geoid={geoid} />
+      <div className = "bigContainer">
+        <div className="detail">
+          <WeatherInfo zip={zip} name={name} />
+          <div className="smallMap">
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: 'AIzaSyCj84rcb1xl0PJWCDemv2-0Z-COMB8g22M'
+              }}
+              defaultCenter={{ lat, lng }}
+              defaultZoom={12}
+            >
+              <Mark lat={lat} lng={lng} imgUrl={locationImg} />
+            </GoogleMapReact>
+            
+          </div>
+          <div style={{ display: 'block' }}>
+            <DetailInfo geoid={geoid} />
+          </div>
         </div>
       </div>
     )
