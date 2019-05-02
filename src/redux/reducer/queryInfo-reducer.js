@@ -5,14 +5,30 @@ const defaultQuery = {
   name: 'Bellerose'
 }
 
-export default (state = defaultQuery, action) => {
+const KEY = 'QUERY_INFO'
+
+// simple data persistence, Avoid data loss on refresh
+const setInfo2Local = state => {
+  window.localStorage.setItem(KEY, JSON.stringify(state))
+}
+
+const getInfo = () => {
+  try {
+    const info = window.localStorage.getItem(KEY)
+    console.log('test',info)
+    return info ? JSON.parse(info) : defaultQuery
+  } catch (e) {
+    return defaultQuery
+  }
+}
+
+export default (state, action) => {
   switch (action.type) {
     case 'SET_QUERY':
-      return {
-        ...state,
-        ...action.payload
-      }
+      const newInfo = { ...state, ...action.payload }
+      setInfo2Local(newInfo)
+      return newInfo
     default:
-      return state
+      return getInfo()
   }
 }

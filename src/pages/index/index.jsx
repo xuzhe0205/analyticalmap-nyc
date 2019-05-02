@@ -25,7 +25,6 @@ export class Index extends Component {
     zoom: 10
   }
 
-  
   handleMapApiLoad = (map, maps) => {
     this.map = map
     this.maps = maps
